@@ -35,8 +35,6 @@
 | peek   | For a list or queue, same as first.                                                                                    |
 | pop    | For a list or queue, returns a new list/queue without the first item. If the collection is empty, throws an exception. |
 | nth    | Returns the value at the index. get returns nil if index out of bounds.                                                |
-| peek   | For a vector, same as, but much more efficient than, last.                                                             |
-| pop    | For a vector, returns a new vector without the last item. If the collection is empty, throws an exception.             |
 
 ### Vectors
 
