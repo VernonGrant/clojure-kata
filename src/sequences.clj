@@ -48,3 +48,29 @@
       (reduce + numbers-range))))
 
 (get-sum 5 1)
+
+;; Highest and Lowest
+;; -----------------------------------------------------------------------------
+;;
+;; Description:
+;;
+;; In this little assignment you are given a string of space separated numbers,
+;; and have to return the highest and lowest number as a string.
+;;
+;; My Solution:
+;; - Split string into individual pieces.
+;; - Use map to convert each string to an int.
+;; - Return the min and max as a string.
+;;
+;; Notes:
+;;
+;; Could not make use of parse-long, not available in some version of Clojure.
+
+(defn high-and-low [s]
+  (let [numbers (->> (clojure.string/split s #"\s")
+                     (map #(Integer/parseInt %)))
+        min (apply min numbers)
+        max (apply max numbers)]
+    (str max " " min)))
+
+(high-and-low "8 3 -5 42 -1 0 0 -9 4 7 4 -4")
