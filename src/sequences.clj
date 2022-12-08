@@ -12,15 +12,39 @@
 ;;
 ;; - Calculate the vectors half.
 ;; - Use subvec to take each half.
-
-(def numbers (into [] (range 13)))
-
-;; First solution.
 ;;
-;; Notes: I was thinking of using the partition function, but that will return a
-;; sequence. I'm still trying to comprehend when and how to use sequences with
-;; collections interchangeably.
-(let [half (int (/ (count numbers) 2))
+
+(let [numbers (into [] (range 13))
+      half (int (/ (count numbers) 2))
       part-a (subvec numbers 0 half)
       part-b (subvec numbers half (count numbers))]
   [part-a part-b])
+
+;; Sum of Numbers
+;; -----------------------------------------------------------------------------
+;;
+;; Description:
+;;
+;; Given two integers a and b, which can be positive or negative, find the sum
+;; of all the integers between and including them and return it. If the two
+;; numbers are equal return a or b.
+;;
+;; My Solution:
+;;
+;; - Check if a and b is equal, if so just return a.
+;; - Get a sequence of numbers in respects to a and b using the range function.
+;; - Sum up all the numbers using reduce.
+;;
+;; In Hindsight:
+;;
+;; - Instead of sorting the arguments, I could have used the min and max functions.
+;; - I also could have made two ranges and just added up their individual sums.
+
+(defn get-sum [a b]
+  (if (= a b)
+    a
+    (let [[start end] (sort [a b])
+          numbers-range (range start (inc end))]
+      (reduce + numbers-range))))
+
+(get-sum 5 1)
