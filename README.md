@@ -86,6 +86,13 @@
 | quote     | Yields the unevaluated form. Use the ali as `` `symbol ``.                         |
 | gensym    | Returns a new symbol with a unique name. Mainly used for code generation purposes. |
 
+### Useful functions
+
+| Symbol   | Description                                                                                                                    |
+|----------|--------------------------------------------------------------------------------------------------------------------------------|
+| partial  | Takes a function f and fewer than the normal arguments to f, and returns a fn that takes a variable number of additional args. |
+| identity | Returns its argument.                                                                                                          |
+
 ## Functional programming terms
 
 - Predicate: Function that returns true or false.

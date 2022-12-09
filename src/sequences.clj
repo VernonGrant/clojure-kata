@@ -37,7 +37,7 @@
 ;;
 ;; In Hindsight:
 ;;
-;; - Instead of sorting the arguments, I could have used the min and max functions.
+;; - Instead of sorting the arguments, I could have used the min and max.
 ;; - I also could have made two ranges and just added up their individual sums.
 
 (defn get-sum [a b]
@@ -74,3 +74,40 @@
     (str max " " min)))
 
 (high-and-low "8 3 -5 42 -1 0 0 -9 4 7 4 -4")
+
+;; Find the odd int
+;; -----------------------------------------------------------------------------
+;;
+;; Description:
+;;
+;; Given an array of integers, find the one that appears an odd number of times.
+;; There will always be only one integer that appears an odd number of times.
+;;
+;; [7] should return 7, because it occurs 1 time (which is odd).
+;; [0] should return 0, because it occurs 1 time (which is odd).
+;; [1,1,2] should return 2, because it occurs 1 time (which is odd).
+;; [0,1,0,1,0] should return 0, because it occurs 3 times (which is odd).
+;; [1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
+;;
+;; My Solution:
+;;
+;; - Group the provided vector numbers by their types as a map.
+;; - Map the inputs into a new vector pair of number, occurrence count.
+;; - Use list comprehension to only get the odd pair.
+;;
+;; Notes:
+;;
+;; Wasn't sure how to solve this the Clojure way, but did what I knew at this
+;; time. Here's some other cleaver solutions I found online.
+;;
+;; (defn find-odd [xs] (reduce bit-xor xs))
+;; (defn find-odd [v] (ffirst (filter #(odd? (second %)) (frequencies v))))
+
+(defn find-odd [xs]
+  (let [nums (group-by identity xs)
+        occurs (map (fn [m] [(key m) (count (val m))]) nums)
+        odd-pair (for [x occurs :when (odd? (get x 1))] x)
+        odd-pair-v (into [] (flatten odd-pair))]
+    (get odd-pair-v 0)))
+
+(find-odd [1,2,2,3,3,3,4,3,3,3,2,2,1])
