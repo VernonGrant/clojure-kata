@@ -98,7 +98,8 @@
 ;; Notes:
 ;;
 ;; Wasn't sure how to solve this the Clojure way, but did what I knew at this
-;; time. Here's some other cleaver solutions I found online.
+;; time. I should have used frequencies. Here's some other cleaver solutions I
+;; found online.
 ;;
 ;; (defn find-odd [xs] (reduce bit-xor xs))
 ;; (defn find-odd [v] (ffirst (filter #(odd? (second %)) (frequencies v))))
