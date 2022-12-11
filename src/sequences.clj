@@ -111,4 +111,63 @@
         odd-pair-v (into [] (flatten odd-pair))]
     (get odd-pair-v 0)))
 
-(find-odd [1,2,2,3,3,3,4,3,3,3,2,2,1])
+(find-odd [1, 2, 2, 3, 3, 3, 4, 3, 3, 3, 2, 2, 1])
+
+;; Simple Sentences
+;; -----------------------------------------------------------------------------
+;;
+;; Description:
+;;
+;; Implement a function, so it will produce a sentence out of the given parts.
+;;
+;; Array of parts could contain:
+;; - words;
+;; - commas in the middle;
+;; - multiple periods at the end.
+;;
+;; Sentence making rules:
+;; - there must always be a space between words;
+;; - there must not be a space between a comma and word on the left;
+;; - there must always be one and only one period at the end of a sentence.
+;;
+;; My Solution:
+;;
+;; - Take the input and based on its type, we need to prepend a space. (map)
+;; - Removes all fullstops.
+;; - Convert to string.
+;; - Trim string.
+
+(defn make_sentences [parts]
+  (let [prepend-spaces (fn [s] (if (or (= s ",") (= s ".")) s (str " " s)))
+        remove-two-plus-commas (fn [x] (clojure.string/replace x #",{2,}" ""))]
+    (->> (conj (filterv (fn [s] (not= s ".")) parts) ".")
+         (map prepend-spaces)
+         (apply str)
+         remove-two-plus-commas
+         (clojure.string/trim))))
+
+(make_sentences ["hello" "," "my" "dear"])
+(make_sentences ["One" "," "two" "two" "," "three" "three" "three" "," "4" "4" "4" "4"])
+
+;; Extract size from tree
+;; -----------------------------------------------------------------------------
+;;
+;; Description:
+;; Extract all sizes keys from a nested map.
+;;
+;; Notes:
+
+;; - Could have made use tree-seq to avoid a possible stack overflow.
+
+(def sample-tree-nodes {:size 48381165, :children {:a {:size 94853, :children {:e {:size 584, :children {:filesizes 584}}, :filesizes 94269}},:d {:size 24933642, :children {:filesizes 24933642}},:filesizes 23352670}})
+
+(defn get-sizes [{size :size :as nodes}]
+  (let [not-nil? (complement nil?)]
+    (if (not-nil? (get nodes :children))
+      (let [child-node-sizes (for [child-node (vals (:children nodes))
+                                   :when (not-nil? (:size child-node))]
+                               (get-sizes child-node))]
+        (vec (concat [size] child-node-sizes)))
+      [size])))
+
+(get-sizes sample-tree-nodes)
